@@ -3,10 +3,17 @@ import { prisma } from "../../../database/prismaClient";
 
 export class DeleteBookUseCase {
 
-    async execute(id_book: string) {
+    async execute(id: string) {
+
         const book = await prisma.books.delete({
             where: {
-                id: id_book
+                id
+            }
+        })
+
+        const booksRents = await prisma.booksRents.deleteMany({
+            where: {
+                id_book: book.id
             }
         })
 

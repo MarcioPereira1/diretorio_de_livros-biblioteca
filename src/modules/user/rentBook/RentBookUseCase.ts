@@ -22,22 +22,22 @@ export class RentBookUseCase {
             throw new Error("Book already rented")
         }
 
-        const statusBook = await prisma.books.update({
+        const updateBook = await prisma.books.update({
             where: {
-                id: book.id
+                id
             },
             data: {
-                rented: true,
-                id_user
-            },
-            select: {
-                id: true,
-                name: true,
-                rented: true,
-                created_at: true,             
+                rented: true
             }
         })
 
-        return statusBook
+        const bookRent = await prisma.booksRents.create({
+            data: {
+                id_user,
+                id_book: book.id
+            },
+        })
+
+        return bookRent
     }
 }

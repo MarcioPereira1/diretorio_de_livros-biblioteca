@@ -1,17 +1,13 @@
-import { prisma } from "../../../database/prismaClient";
-
+import { prisma } from "../../../database/prismaClient"
 
 export class MyBooksRentedUseCase {
 
     async execute(id_user: string) {
-        const books = await prisma.users.findUnique({
+        const books = await prisma.booksRents.findMany({
             where: {
-                id: id_user,
+                id_user
             }, 
             select: {
-                id: true,
-                name: true,
-                username: true,
                 book: true
             }
         })
